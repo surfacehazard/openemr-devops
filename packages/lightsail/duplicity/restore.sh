@@ -24,11 +24,16 @@ rm -rf $(docker volume inspect lightsail_sqlbackup | jq -r ".[0].Mountpoint")/*
 rm -rf $(docker volume inspect lightsail_sitevolume | jq -r ".[0].Mountpoint")/*
 
 if [ -f /root/cloud-backups-enabled ]; then
-  S3=$(cat /root/.cloud-s3.txt)
-  KMS=$(cat /root/.cloud-kms.txt)
-  PASSPHRASE=$(aws s3 cp s3://$S3/Backup/passphrase.txt - --sse aws:kms --sse-kms-key-id $KMS)
+#  S3=$(cat /root/.cloud-s3.txt)
+#  KMS=$(cat /root/.cloud-kms.txt)
+#  PASSPHRASE=$(aws s3 cp s3://$S3/Backup/passphrase.txt - --sse aws:kms --sse-kms-key-id $KMS)
+  source /root/cloud-variables
+  PASSPHRASE=$(aws s3 cp s3://$RECOVERYS3/Backup/passphrase.txt - --sse aws:kms --sse-kms-key-id $RECOVERYKMS)
+
   export PASSPHRASE
-  duplicity --force s3://s3.amazonaws.com/$S3/Backup /
+
+#  duplicity --force s3://s3.amazonaws.com/$S3/Backup /
+  duplicity --force s3://s3.amazonaws.com/$RECOVERYS3/Backup /
 else
   duplicity --no-encryption --force file:///root/backups /
 fi

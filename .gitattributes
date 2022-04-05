@@ -2,3 +2,5 @@
 * text=auto
 *.sh text eol=lf
 *.source text eol=lf
+*.json diff=json
+

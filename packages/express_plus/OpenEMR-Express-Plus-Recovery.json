@@ -332,7 +332,7 @@
                                             "aws s3 cp /tmp/mypass s3://$S3/Backup/passphrase.txt --sse aws:kms --sse-kms-key-id $KMS\n",
                                             "rm /tmp/mypass\n",
                                             "curl -L https://raw.githubusercontent.com/surfacehazard/openemr-devops/master/packages/lightsail/launch.sh > /root/launch.sh\n",
-                                            "chmod +x /root/launch.sh && /root/launch.sh -e -s 0\n",
+                                            "chmod +x /root/launch.sh && /root/launch.sh -e -s 0 -t openemr:6.1.0\n",
                                             "touch /root/recovery-restore-required\n",
                                             "/root/restore.sh --confirm\n",
                                             "rm /root/recovery-restore-required\n"
